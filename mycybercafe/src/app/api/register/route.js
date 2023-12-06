@@ -22,17 +22,22 @@ export async function GET(req, res) {
    
   
     // =================================================
-  const { MongoClient } = require('mongodb');
-  const url = 'mongodb://root:example@localhost:27017/';
+  const { MongoClient } = require("mongodb");
+  const url = "mongodb+srv://b00143682:pass@cluster0.2tcd7yu.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(url);
   const dbName = 'app'; // database name
   await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
-  const collection = db.collection('login'); // collection name
-  const findResult = await collection.find({"username":
-  "sample@test.com"}).toArray();
-  console.log('Found documents =>', findResult);
+  const collection = db.collection('register'); // collection name
+  const findResult = await collection.insertOne({
+    username: email,
+    pass: pass,
+    pass2: pass2,
+    DOB: DOB,
+    PhoneNumber: PhoneNumber
+
+  });
   
   
   

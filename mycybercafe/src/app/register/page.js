@@ -61,7 +61,7 @@ console.log(data);
     console.log("sent phone number: " + PhoneNumber);
 
     runDBCallAsync(
-      `http://localhost:3000/api/register?pass2=${pass2}&email=${email}&pass=${pass}&DOB=${DOB}&PhoneNumber=${PhoneNumber}`
+      `api/register?pass2=${pass2}&email=${email}&pass=${pass}&DOB=${DOB}&PhoneNumber=${PhoneNumber}`
     );
   }; // end handler
 
