@@ -52,16 +52,13 @@ console.log(data);
     let email = data.get("email");
     let pass = data.get("pass");
     let pass2 = data.get("pass2");
-    let DOB = data.get("DOB");
     let PhoneNumber = data.get("PhoneNumber");
     console.log("Sent email:" + email);
     console.log("Sent pass:" + pass);
     console.log("Sent pass2:" + pass2);
-    console.log("Sent DOB:" + DOB);
-    console.log("sent phone number: " + PhoneNumber);
 
     runDBCallAsync(
-      `api/register?pass2=${pass2}&email=${email}&pass=${pass}&DOB=${DOB}&PhoneNumber=${PhoneNumber}`
+      `api/register?pass2=${pass2}&email=${email}&pass=${pass}`
     );
   }; // end handler
 
@@ -110,7 +107,7 @@ console.log(data);
               required
               fullWidth
               name="pass"
-              label="Pass"
+              label="Password"
               type="pass"
               id="pass"
               autoComplete="current-password"
@@ -120,30 +117,10 @@ console.log(data);
               required
               fullWidth
               name="pass2"
-              label="Pass2"
+              label="Confirm Password"
               type="pass"
               id="pass2"
               autoComplete="current-password"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="DOB"
-              label="DOB"
-              type="DOB"
-              id="DOB"
-              autoComplete="DOB"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="PhoneNumber"
-              label="PhoneNumber"
-              type="PhoneNumber"
-              id="PhoneNumber"
-              autoComplete="PhoneNumber"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

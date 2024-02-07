@@ -11,13 +11,9 @@ export async function GET(req, res) {
   const email = searchParams.get('email')
   const pass = searchParams.get('pass')
   const pass2 = searchParams.get('pass2')
-  const DOB = searchParams.get('DOB')
-  const PhoneNumber = searchParams.get('PhoneNumber')
   console.log(email);
   console.log(pass);
   console.log(pass2);
-  console.log(DOB);
-  console.log(PhoneNumber);
 
 
 
