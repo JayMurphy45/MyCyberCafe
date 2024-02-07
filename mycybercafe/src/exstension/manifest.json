@@ -1,14 +1,15 @@
 {
     "name": "MyCyberCáfe",
     "version": "1.0.0",
-    "description": "screen time web browser exstension",
+    "description": "Screen time web browser extension",
     "manifest_version": 3,
     "author": "Jamie, Daniel, Christopher",
     "action": {
-        "icon": {
-            "32": "mug.jpg"
-        },
-        "default_popup": "index.html",
-        "default_title": "MyCyberCáfe"
+      "icon": {
+        "32": "mug.jpg"
+      },
+      "default_popup": "index.html",
+      "default_title": "MyCyberCáfe"
     }
-}
+  }
+  

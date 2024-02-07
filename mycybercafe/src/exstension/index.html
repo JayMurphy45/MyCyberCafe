@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +7,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div><h2>MyCyberCáfe<img src="mug.jpg" width="20" height="20"></h2> </div>
-    
+    <div>
+        <h2>MyCyberCáfe<img src="mug.jpg" width="20" height="20"></h2>
+    </div>
+
+    <div id="buttonContainer">
+        <label for="startStopButton">Start/Stop</label>
+        <button id="startStopButton" onclick="toggleStartStop()">Start</button>
+        <div id="timer">00:00</div> <!-- Timer display -->
+    </div>
 </body>
-<script></script>
 </html>
+
+
