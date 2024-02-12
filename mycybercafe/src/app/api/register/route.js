@@ -7,6 +7,7 @@ export async function GET(req, res) {
 
   // get the values
   // that were sent across to us.
+  /*
   const { searchParams } = new URL(req.url)
   const email = searchParams.get('email')
   const pass = searchParams.get('pass')
@@ -14,13 +15,14 @@ export async function GET(req, res) {
   console.log(email);
   console.log(pass);
   console.log(pass2);
+*/
 
 
 
-  // =================================================
+  // Mongoose connect
   const mongoose = require("mongoose")
 
-  const dburl = "mongodb+srv://jamie:pass@cluster0.bjrqopf.mongodb.net/?retryWrites=true&w=majority"
+  const dburl = "mongodb+srv://jamie:X590XOlHowHflFOG@cluster0.bjrqopf.mongodb.net/?retryWrites=true&w=majority"
 
   const connectionParams = {
     useNewUrlParser: true,
@@ -34,8 +36,19 @@ export async function GET(req, res) {
   });
 
 
+ // insert mongoose data schema
 
+  const usernameschema  = new mongoose.Schema({
+    username: String
+  });
 
+  //make username object
+  const username = mongoose.model('username', usernameschema);
+  const jamie = new username({ name: 'Jamie'});
+  console.log(jamie); // Logs jamie
+
+  //saves data to database
+  await jamie.save();
   let valid = true;
 
 
