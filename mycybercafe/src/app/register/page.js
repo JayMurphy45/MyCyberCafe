@@ -10,57 +10,57 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
+//import next.js router
+
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { createTheme } from "@mui/material/styles";
 import { green, purple } from "@mui/material/colors";
+import { useRouter } from "next/router";
 
 export default function Page() {
-  /*
-  This function does the actual work
-  calling the fetch to get things from the database.
-  */
-  async function runDBCallAsync(url) {
-    const res = await fetch(url);
-    const data = await res.json();
+  //router from next.js library
+  const router = useRouter;
 
-    console.log("server response from api")
-console.log(data);
+  //handle submit function
+  handleSubmit = async (event) => {
 
-    if (data.data == "true") {
-      console.log("registered");
-      window.location="/dashboard";
-    } else {
-      console.log("not registered ");
-    }
-  }
-
-  /*
-
-  When the button is clicked, this is the event that is fired.
-  The first thing we need to do is prevent the default refresh of the page.
-  */
-  const handleSubmit = (event) => {
-    console.log("handling submit");
-
+    //prevent website from reloading on default
     event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
+    //get form data
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const pass = formData.get("pass");
+    const pass2 = formData.get("pass2");
 
-    let email = data.get("email");
-    let pass = data.get("pass");
-    let pass2 = data.get("pass2");
-    let PhoneNumber = data.get("PhoneNumber");
-    console.log("Sent email:" + email);
-    console.log("Sent pass:" + pass);
-    console.log("Sent pass2:" + pass2);
+    //send registration request to the server i.e route.js
+    try {
+      const response = await fetch("./api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          confirmPassword,
+        }),
+      });
 
-    runDBCallAsync(
-      `api/register?pass2=${pass2}&email=${email}&pass=${pass}`
-    );
-  }; // end handler
+      if (response.ok) {
+        // Registration successful, redirect to login page or handle accordingly
+        router.push("/login"); // Change the route to your login page
+      } else {
+        // Registration failed, handle error
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
+}
 
   const theme = createTheme({
     palette: {
@@ -69,6 +69,8 @@ console.log(data);
       },
     },
   });
+
+
 
   return (
     <ThemeProvider theme={theme}>
