@@ -2,7 +2,6 @@ const timeDisplay = document.querySelector("#timeDisplay");
 const startBtn = document.querySelector("#startBtn");
 const pauseBtn = document.querySelector("#pauseBtn");
 
-
 let startTime = 0;
 let elapsedTime = 0;
 let currentTime = 0;
@@ -54,4 +53,5 @@ function updateTime(){
     function pad(unit){
         return (("0") + unit).length > 2 ? unit : "0" + unit;
     }
+    
 }
