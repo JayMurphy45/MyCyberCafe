@@ -25,7 +25,7 @@ export default function Page() {
   const router = useRouter;
 
   //handle submit function
-  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
 
     //prevent website from reloading on default
     event.preventDefault();
@@ -33,8 +33,8 @@ export default function Page() {
     //get form data
     const formData = new FormData(event.target);
     const email = formData.get("email");
-    const pass = formData.get("pass");
-    const pass2 = formData.get("pass2");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
 
     //send registration request to the server i.e route.js
     try {
