@@ -10,6 +10,20 @@
       },
       "default_popup": "index.html",
       "default_title": "MyCyberCáfe"
-    }
+    },
+    "permissions": [
+      "tabs",
+       "activeTab",
+       "<all_urls>"
+    ],
+    
+      "content_scripts": [
+        {
+          "js": ["content.js"],
+          "matches": ["<all_urls>"]
+       
+          
+        }
+      ]
   }
   
