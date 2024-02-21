@@ -10,57 +10,46 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-//import next.js router
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { createTheme } from "@mui/material/styles";
-import { green, purple } from "@mui/material/colors";
-import { useRouter } from "next/router";
+import { green } from "@mui/material/colors";
+import { useState } from "react";
 
 export default function Page() {
-  //router from next.js library
-  const router = useRouter;
+  // Variables to store username and password
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  //handle submit function
-  const handleSubmit = async (event) => {
+  // Handle submit function that sends a post request to the server
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    //prevent website from reloading on default
-    event.preventDefault();
-
-    //get form data
-    const formData = new FormData(event.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
-    const confirmPassword = formData.get("confirmPassword");
-
-    //send registration request to the server i.e route.js
     try {
-      const response = await fetch("./api/register", {
+      const response = await fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-          confirmPassword,
-        }),
+        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
-        // Registration successful, redirect to login page or handle accordingly
-        router.push("/login"); // Change the route to your login page
+        // Redirect to the dashboard page
+        // Note: You need to import 'useRouter' from 'next/router'
+        // const router = useRouter();
+        // router.push("/dashboard");
+        console.log("User created");
       } else {
-        // Registration failed, handle error
-        console.error("Registration failed");
+        console.log("Error", await response.json());
       }
     } catch (error) {
       console.error("Error during registration:", error);
+      // res.status(500).json({ message: "Error during registration" }); // Commented out because 'res' is not defined here
     }
-}
+  };
 
   const theme = createTheme({
     palette: {
@@ -69,8 +58,6 @@ export default function Page() {
       },
     },
   });
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,40 +82,25 @@ export default function Page() {
             sx={{ mt: 1 }}
           >
             <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
+              type="text"
+              label="Username"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="pass"
+              type="password"
               label="Password"
-              type="pass"
-              id="pass"
-              autoComplete="current-password"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="pass2"
-              label="Confirm Password"
-              type="pass"
-              id="pass2"
-              autoComplete="current-password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
+              onClick={handleSubmit}
               type="submit"
               fullWidth
               variant="contained"

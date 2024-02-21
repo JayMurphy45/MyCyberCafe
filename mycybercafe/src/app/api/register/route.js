@@ -1,18 +1,26 @@
-import connectMongo from "../../../../utils/connectMongo";
-export async function POST(req, res) {
+import { connectToDatabase } from "../../../utils/connectMongo";
+import { user } from "../../../models/user";
 
-  // Make a note we are on
-  // the api. This goes to the console.
-  console.log("in the register api page")
+export default async function handler(req, res) {
+  await connectToDatabase();
 
-  //post method to send data to the client
-  if (req.method === "POST") {
-    // Handle registration logic here
-    const { email, password, confirmPassword } = req.body;
+  console.log("in api login");
 
-    // Return a response indicating success or failure
-    res.status(200).json({ message: "Registration successful" });
-  } else {
-    res.status(405).json({ error: "Method not allowed" });
+  const { username, password } = req.body;
+
+  try {
+    // Create a new user
+    const user = new User({
+      username,
+      password,
+    });
+
+    await user.save();
+
+    res.status(200).json({ message: "User created" });
+  } catch (error) {
+    // Handle any errors that occurred during registration
+    console.error("Error during registration:", error);
+    res.status(500).json({ message: "Error during registration" });
   }
 }
