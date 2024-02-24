@@ -4,6 +4,9 @@
     "description": "Screen time web browser extension",
     "manifest_version": 3,
     "author": "Jamie, Daniel, Christopher",
+    "background" : {
+      "service_worker" : "background.js"
+    },
     "action": {
       "icon": {
         "32": "mug.jpg"
