@@ -1,21 +1,41 @@
-import { connectToDatabase } from "../../../utils/connectMongo";
-import { user } from "../../../../models/user";
+export async function GET(req, res) {
+  console.log("login route");
 
-export default async function handler(req, res) {
-  await connectToDatabase();
+  //get the value of the query parameter
+  const { searchParams } = new URL(req.url);
+  const username = searchParams.get("username");
+  const password = searchParams.get("password");
 
-  const { username, password } = req.body;
+  //log the value of the query parameter
+  console.log("username", username);
+  console.log("password", password);
 
-  try {
-    const user = await User.findOne({ username, password });
+  //connect to the database
+  const { MongoClient } = require("mongodb");
 
-    if (user) {
-      res.status(200).json({ message: "User found" });
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ message: "Error during login" });
+  const url = "mongodb://root:example@localhost:27017/";
+  const client = new MongoClient(url);
+
+  const dbName = "app"; //name of the database
+
+  await client.connect();
+  console.log("Connected to the database");
+  const db = client.db(dbName);
+  const collection = db.collection("login"); //collection name
+
+  //check if the username is already in the database
+  const findResult = await collection.find({ username: username }).toArray();
+  console.log("found documents =>", findResult);
+
+  let valid = false;
+  if (findResult.length > 0) {
+    valid = true;
+    console.log("User found");
+  } else {
+    valid = false;
+    console.log("User not found");
   }
+
+  //at the end of the process we need to send something back.
+  return Response.json({ data: "" + valid + "" });
 }

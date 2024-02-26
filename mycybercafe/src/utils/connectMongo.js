@@ -1,22 +1,25 @@
-import mongoose from "mongoose";
-
-let isConnected = false;
+const { MongoClient } = require("mongodb");
 
 export const connectToDatabase = async () => {
-  mongoose.set("strictQuery", true);
+  const url = "mongodb://localhost:27017/";
+  const client = new MongoClient(url);
 
-  //if database is connected do nothing
-  if (isConnected) {
-    console.log("Is connected");
-    return;
-  }
+  const dbName = "app";
 
-  //if database is not connected connect to database
-  try {
-    await mongoose.connect("mongodb://localhost:27017/mycybercafe");
+  await client.connect();
+  const db = client.db(dbName);
+  const collection = db.collection("login"); //collection name
 
-    console.log("Database connected");
-  } catch (error) {
-    console.log(error);
+  const findResult = await collection.find({ username: "username" }).toArray();
+  console.log(findResult);
+
+  let valid = false;
+
+  if (findResult.length > 0) {
+    valid = true;
+    console.log("User found");
+  } else {
+    valid = false;
+    console.log("User not found");
   }
 };
