@@ -58,6 +58,9 @@ const handleSubmit = (event) => {
   runDBCallAsync(
     "http://localhost:3000/api/login?username=${username}&password=${password}"
   );
+
+  //clear the form
+  event.currentTarget.reset();
 }; //end of handleSubmit
 
 async function runDBCallAsync(url) {
@@ -67,6 +70,8 @@ async function runDBCallAsync(url) {
 
   if (data.data === "valid") {
     console.log("login is valid");
+    //redirect to the home page
+    window.location.href = "/dashboard";
   } else {
     console.log("login is not valid");
   }
