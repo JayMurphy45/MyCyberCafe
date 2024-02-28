@@ -1,26 +1,39 @@
-import { connectToDatabase } from "../../../utils/connectMongo";
-import { user } from "../../../models/user";
+export async function GET(req, res) {
+  //make a note of the route
+  console.log("register route");
 
-export default async function handler(req, res) {
-  await connectToDatabase();
+  //get the value of the query parameter
+  const { searchParams } = new URL(req.url);
+  const username = searchParams.get("username");
+  const password = searchParams.get("password");
+  const confirmpassword = searchParams.get("confirmpassword");
 
-  console.log("in api login");
+  //log the value of the query parameter
+  console.log("username", username);
+  console.log("password", password);
+  console.log("confirmpassword", confirmpassword);
 
-  const { username, password } = req.body;
+  //connect to the database
+  const { MongoClient } = require("mongodb");
 
-  try {
-    // Create a new user
-    const user = new User({
-      username,
-      password,
-    });
+  const url = "mongodb://root:example@localhost:27017/";
+  const client = new MongoClient(url);
+  const dbName = "app"; //name of the database
 
-    await user.save();
+  await client.connect();
+  console.log("Connected to the database");
+  const db = client.db(dbName);
+  const collection = db.collection("login"); //collection name
 
-    res.status(200).json({ message: "User created" });
-  } catch (error) {
-    // Handle any errors that occurred during registration
-    console.error("Error during registration:", error);
-    res.status(500).json({ message: "Error during registration" });
-  }
+  //check if the username is already in the database
+  const findResult = await collection.insertOne({
+    username: username,
+    password: password,
+    confirmpassword: confirmpassword,
+  });
+
+  let valid = true;
+
+  //at the end of the process we need to send something back.
+  return Response.json({ data: "" + valid + "" });
 }
