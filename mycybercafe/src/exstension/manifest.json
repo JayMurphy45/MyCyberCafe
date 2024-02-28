@@ -17,8 +17,10 @@
     "permissions": [
       "tabs",
        "activeTab",
-       "<all_urls>"
+       "webRequest"
     ],
+
+    "host_permissions": ["<all_urls>"],
     
       "content_scripts": [
         {
