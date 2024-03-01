@@ -23,7 +23,8 @@ console.log('This is a popup!');
             // get the current time in EPOCH format.
             var currentTime = new Date().valueOf();
             alert(currentTime)
-            fetch('http://localhost:5001?username=xx&url=11111&currentTime='+currentTime)
+            fetch('http://localhost:3000/api/SaveToDb?username=john&time='+currentTime);
+            alert("ok")
         }
         )
     });
