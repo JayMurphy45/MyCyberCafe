@@ -1,5 +1,15 @@
+document.getElementById('startBtn').addEventListener('click', function() {
+    // Send message to background script to start the timer
+    chrome.runtime.sendMessage({ action: 'startBtn' });
+});
+
+document.getElementById('pauseBtn').addEventListener('click', function() {
+    // Send message to background script to pause the timer
+    chrome.runtime.sendMessage({ action: 'pauseBtn' });
+});
+
 console.log('This is a popup!');
-    var button = document.querySelector('startBtn')
+    var button = document.querySelector('button')
     button.addEventListener("click", () => {
     alert("button clicked");
     // get the open tab url
@@ -9,12 +19,11 @@ console.log('This is a popup!');
             const tab=tabs[0];
             console.log("URL:", tab.url)
             alert(tab.url)
-            console.log("Getting ready to save the record");
+            console.log("Getting ready to save the record");       
             // get the current time in EPOCH format.
             var currentTime = new Date().valueOf();
             alert(currentTime)
-            fetch('http://localhost:3000/api/SaveToDb?username=john&time=&url='+ currentTime + encodeURIComponent(currentURL));
-
+            fetch('http://localhost:5001?username=xx&url=11111&currentTime='+currentTime)
         }
         )
     });
