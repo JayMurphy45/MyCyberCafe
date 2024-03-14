@@ -8,8 +8,15 @@ import Link from "next/link";
 import NativeSelectInput from "@mui/material/NativeSelect/NativeSelectInput";
 import NavBar from "@/components/NavBar";
 
-export default function CenteredTabs() {
-  const [value, setValue] = React.useState(0);
+export default function Page() {
+  fetch("localhost:3000/api/authCheck")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data.status);
+      if (data.status != "true") {
+        window.location = "/";
+      }
+    });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

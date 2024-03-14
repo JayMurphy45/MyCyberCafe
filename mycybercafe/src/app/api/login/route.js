@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 export async function GET(req, res) {
   console.log("login route");
 
@@ -28,9 +30,23 @@ export async function GET(req, res) {
   console.log("found documents =>", findResult);
 
   let valid = false;
-  if (findResult.length > 0) {
+
+  //bcrypt the password
+  const bcrypt = require("bcrypt");
+  let hashResult = bcrypt.compareSync(password, findResult[0].password); // true
+
+  //log the value of the result
+  console.log("findResult", findResult[0].password);
+  console.log("hashResult", hashResult);
+
+  //if the password is correct, set the cookie
+  if (findResult.length > 0 && hashResult == true) {
     valid = true;
     console.log("User found");
+    //save the cookie
+    console.log("saving cookie");
+    cookies.set("auth", true);
+    cookies.set("username", username);
   } else {
     valid = false;
     console.log("User not found");
