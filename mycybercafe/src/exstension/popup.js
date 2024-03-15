@@ -1,5 +1,3 @@
-
-
 document.getElementById('startBtn').addEventListener('click', function() {
     // Send message to background script to start the timer
     chrome.runtime.sendMessage({ action: 'startBtn' });
@@ -9,12 +7,8 @@ document.getElementById('pauseBtn').addEventListener('click', function() {
     // Send message to background script to pause the timer
     chrome.runtime.sendMessage({ action: 'pauseBtn' });
 });
-
-
 console.log('This is a popup!');
-
     var button = document.querySelector('button')
-
     button.addEventListener("click", () => {
     alert("button clicked");
     // get the open tab url
