@@ -8,6 +8,13 @@ export async function GET(req, res) {
   const password = searchParams.get("password");
   const confirmpassword = searchParams.get("confirmpassword");
 
+  //bcrypt the password
+  const bcrypt = require("bcrypt");
+  const saltRounds = 10;
+
+  //hash the password
+  const hash = bcrypt.hashSync(password, saltRounds);
+
   //log the value of the query parameter
   console.log("username", username);
   console.log("password", password);
@@ -28,7 +35,7 @@ export async function GET(req, res) {
   //check if the username is already in the database
   const findResult = await collection.insertOne({
     username: username,
-    password: password,
+    password: hash,
     confirmpassword: confirmpassword,
   });
 
