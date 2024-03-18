@@ -25,7 +25,10 @@ const handleSubmit = (event) => {
   console.log("confirmpassword", confirmpassword);
 
   runDBCallAsync(
-    "http://localhost:3000/api/register?username=${username}&password=${password}&confirmpassword=${confirmpassword}"
+    "http://localhost:3000/api/register?username=" +
+      username +
+      "&password=" +
+      password
   );
 }; //end of handleSubmit
 
@@ -79,7 +82,7 @@ export default function Page() {
         label="Remember me"
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-        Sign In
+        Register
       </Button>
       <Link href="/">already have a account? login</Link>
     </Box>

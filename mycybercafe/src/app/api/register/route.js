@@ -6,7 +6,6 @@ export async function GET(req, res) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get("username");
   const password = searchParams.get("password");
-  const confirmpassword = searchParams.get("confirmpassword");
 
   //bcrypt the password
   const bcrypt = require("bcrypt");
@@ -18,7 +17,6 @@ export async function GET(req, res) {
   //log the value of the query parameter
   console.log("username", username);
   console.log("password", password);
-  console.log("confirmpassword", confirmpassword);
 
   //connect to the database
   const { MongoClient } = require("mongodb");
@@ -36,9 +34,8 @@ export async function GET(req, res) {
   const findResult = await collection.insertOne({
     username: username,
     password: hash,
-    confirmpassword: confirmpassword,
   });
-
+  console.log("inserted");
   let valid = true;
 
   //at the end of the process we need to send something back.

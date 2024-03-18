@@ -11,7 +11,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Link from "@mui/material/Link";
-import { set } from "mongoose";
 
 export default function Page() {
   //first
@@ -32,7 +31,7 @@ export default function Page() {
   const validateForm = (event) => {
     console.log("validate form");
 
-    let errorMessage = " ";
+    let errorMessage = "";
 
     const data = new FormData(event.currentTarget);
 
@@ -102,7 +101,7 @@ export default function Page() {
     if (data.data === "valid") {
       console.log("login is valid");
       //redirect to the home page
-      window.location.href = "/dashboard";
+      window.location("/dashboard");
     } else {
       console.log("login is not valid");
     }
