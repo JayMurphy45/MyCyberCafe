@@ -1,4 +1,11 @@
-    var ctx = document.getElementById('myChart').getContext('2d');
+   
+   
+     const response = await fetch("http://example.com/movies.json");
+     const movies = await response.json();
+
+
+     
+   var ctx = document.getElementById('myChart').getContext('2d');
     var myPieChart = new Chart(ctx, {
         type: 'pie',
         data: {
