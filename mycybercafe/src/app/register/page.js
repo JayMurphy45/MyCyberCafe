@@ -11,6 +11,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Link from "@mui/material/Link";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import { Avatar } from "@material-ui/core";
 
 export default function Page() {
   //state variable to hold the error message
@@ -65,6 +67,7 @@ export default function Page() {
 
     //stop the form from submitting
     event.preventDefault();
+
     //validate the form
     let errorMessage = validateForm(event);
 
@@ -105,7 +108,21 @@ export default function Page() {
   } //end of runDBCallAsync
 
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh", // Center vertically on the screen
+      }}
+    >
+      <Avatar sx={{ m: "auto", bgcolor: "secondary.main" }}>
+        <AppRegistrationIcon />
+      </Avatar>
       <React.Fragment>
         <Dialog
           open={open}
@@ -135,6 +152,7 @@ export default function Page() {
         name="username"
         autoComplete="username"
         autoFocus
+        sx={{ width: 300 }}
       />{" "}
       <TextField
         margin="normal"
@@ -145,12 +163,18 @@ export default function Page() {
         type="password"
         id="password"
         autoComplete="current-password"
+        sx={{ width: 300 }}
       />
       <FormControlLabel
         control={<Checkbox value="remember" color="primary" />}
         label="Remember me"
       />
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2, width: 300 }}
+      >
         Register
       </Button>
       <Link href="/">already have a account? login</Link>

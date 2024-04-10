@@ -11,9 +11,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Link from "@mui/material/Link";
+import Avatar from "@mui/material/Avatar";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export default function Page() {
-  //first
+  //state variable to hold the error message
   const [open, setOpen] = React.useState(false);
 
   //create a state variable to hold the error message
@@ -25,9 +27,9 @@ export default function Page() {
     setOpen(false);
   };
 
-  //Second
   const [errorHolder, setErrorHolder] = React.useState(false);
 
+  //validate the form
   const validateForm = (event) => {
     console.log("validate form");
 
@@ -60,24 +62,20 @@ export default function Page() {
 
     return errorMessage;
   };
-
   const handleSubmit = (event) => {
-    console.log("handling submit");
+    console.log("submit");
 
     //stop the form from submitting
     event.preventDefault();
-
     //validate the form
     let errorMessage = validateForm(event);
 
     //save the message
     setErrorHolder(errorMessage);
 
-    //if there is an error, stop the form from submitting
     if (errorMessage.length > 0) {
       setOpen(true);
     } else {
-      //if there is no error, submit the form
       const data = new FormData(event.currentTarget);
 
       let username = data.get("username");
@@ -88,7 +86,10 @@ export default function Page() {
       console.log("password", password);
 
       runDBCallAsync(
-        "http://localhost:3000/api/login?username=${username}&password=${password}"
+        "http://localhost:3000/api/register?username=" +
+          username +
+          "&password=" +
+          password
       );
     } //end of else
   }; //end of handleSubmit
@@ -98,16 +99,30 @@ export default function Page() {
     const res = await fetch(url);
     const data = await res.json();
 
-    if (data.data === "valid") {
-      console.log("login is valid");
-      //redirect to the home page
-      window.location("/dashboard");
+    if (data.data === "true") {
+      console.log("registration is valid");
     } else {
-      console.log("login is not valid");
+      console.log("registration is not valid");
     }
   } //end of runDBCallAsync
+
   return (
-    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh", // Center vertically on the screen
+      }}
+    >
+      <Avatar sx={{ bgcolor: "secondary.main" }}>
+        <LockOutlinedIcon />
+      </Avatar>
+
       <React.Fragment>
         <Dialog
           open={open}
@@ -137,7 +152,8 @@ export default function Page() {
         name="username"
         autoComplete="username"
         autoFocus
-      />{" "}
+        sx={{ width: 300 }}
+      />
       <TextField
         margin="normal"
         required
@@ -147,15 +163,21 @@ export default function Page() {
         type="password"
         id="password"
         autoComplete="current-password"
+        sx={{ width: 300 }}
       />
       <FormControlLabel
         control={<Checkbox value="remember" color="primary" />}
         label="Remember me"
       />
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2, width: 300 }}
+      >
         Sign In
       </Button>
-      <Link href="/register"> Dont have a account? register</Link>
+      <Link href="/register"> Don't have an account? Register</Link>
     </Box>
   );
 }
