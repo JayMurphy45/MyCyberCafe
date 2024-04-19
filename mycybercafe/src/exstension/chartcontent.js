@@ -1,7 +1,7 @@
    
    
-     const response = await fetch("http://example.com/movies.json");
-     const movies = await response.json();
+     // const response = await fetch("http://example.com/movies.json");
+    //  const movies = await response.json();
 
 
      

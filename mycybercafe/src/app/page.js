@@ -12,7 +12,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Link from "@mui/material/Link";
 import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export default function Page() {
   //state variable to hold the error message
@@ -41,7 +41,7 @@ export default function Page() {
     let username = data.get("username");
 
     //pull in the validator
-    var validator = require("email-validator");
+    // var validator = require("email-validator");
 
     //validate the email
     let emailCheck = validator.validate(username);
