@@ -9,7 +9,7 @@ import NativeSelectInput from "@mui/material/NativeSelect/NativeSelectInput";
 import NavBar from "@/components/NavBar";
 
 export default function Page() {
-  fetch("localhost:3000/api/authCheck")
+  fetch("api/authCheck")
     .then((res) => res.json())
     .then((data) => {
       console.log(data.status);
