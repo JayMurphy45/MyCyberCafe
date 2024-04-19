@@ -86,11 +86,11 @@ export default function Page() {
       console.log("password", password);
 
       runDBCallAsync(
-        "http://localhost:3000/api/register?username=" +
-          username +
-          "&password=" +
-          password
+        "api/register?username=" + username + "&password=" + password
       );
+
+      //if the registration is valid, redirect to the login page
+      window.location = "/dashboard";
     } //end of else
   }; //end of handleSubmit
 

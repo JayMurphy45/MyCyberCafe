@@ -87,10 +87,7 @@ export default function Page() {
       console.log("password", password);
 
       runDBCallAsync(
-        "http://localhost:3000/api/register?username=" +
-          username +
-          "&password=" +
-          password
+        "api/register?username=" + username + "&password=" + password
       );
     } //end of else
   }; //end of handleSubmit
