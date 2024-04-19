@@ -1,33 +1,49 @@
-import { GET } from "../register/route.js";
-import { MongoClient } from "mongodb";
-import bcrypt from "bcrypt";
+export async function GET(req, res) {
+  //make a note of the route
+  console.log("register route");
 
-jest.mock("bcrypt", () => ({
-  hashSync: jest.fn(() => "hashedPassword"),
-}));
+  //get the value of the query parameter
+  const { searchParams } = new URL(req.url);
+  const username = searchParams.get("username");
+  const password = searchParams.get("password");
 
-jest.mock("mongodb", () => {
-  const mClient = {
-    connect: jest.fn(),
-    db: jest.fn().mockReturnThis(),
-    collection: jest.fn().mockReturnThis(),
-    insertOne: jest.fn().mockResolvedValue({}),
-  };
-  return { MongoClient: jest.fn(() => mClient) };
-});
+  //bcrypt the password
+  const bcrypt = require("bcrypt");
+  const saltRounds = 10;
 
-describe("GET function", () => {
-  test("registers a user with valid input", async () => {
-    // Mock request and response objects
-    const req = { url: "/api/register?username=test&password=password" };
-    const res = {
-      json: jest.fn(),
-    };
+  //hash the password
+  const hash = bcrypt.hashSync(password, saltRounds);
 
-    // Call the GET function
-    await GET(req, res);
+  //log the value of the query parameter
+  console.log("username", username);
+  console.log("password", password);
 
-    // Verify that the response was sent with the correct data
-    expect(res.json).toHaveBeenCalledWith({ data: "true" });
+  //connect to the database
+  const { MongoClient } = require("mongodb");
+
+  //local host
+  //const url = "mongodb://root:example@localhost:27017/";
+
+  //cloud database url
+  const url =
+    "mongodb+srv://b00143682:Test12345678@cluster0.pggqupk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  const client = new MongoClient(url);
+  const dbName = "app"; //name of the database
+  console.log("DO WE GET HERE?");
+  await client.connect();
+  console.log("Connected to the database");
+  const db = client.db(dbName);
+  const collection = db.collection("login"); //collection name
+
+  //check if the username is already in the database
+  const findResult = await collection.insertOne({
+    username: username,
+    password: hash,
   });
-});
+
+  let valid = true;
+
+  console.log("at end");
+  //at the end of the process we need to send something back.
+  return Response.json({ data: "" + valid + "" });
+}
