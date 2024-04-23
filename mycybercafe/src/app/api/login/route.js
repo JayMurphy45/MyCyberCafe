@@ -14,14 +14,16 @@ export async function GET(req, res) {
 
   //connect to the database
   const { MongoClient } = require("mongodb");
-
   //local host
   //const url = "mongodb://root:example@localhost:27017/";
   //cloud database url
   const url =
+
     "mongodb+srv:/b00143682:test12345@cluster0.pggqupk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
   const client = new MongoClient(url);
 
+
+  const client = new MongoClient(url);
   const dbName = "app"; //name of the database
 
   await client.connect();
