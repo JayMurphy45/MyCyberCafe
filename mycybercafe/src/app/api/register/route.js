@@ -26,7 +26,7 @@ export async function GET(req, res) {
 
   //cloud database url
   const url =
-    "mongodb+srv://b00143682:Test12345678@cluster0.pggqupk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+    "mongodb+srv://b00143682:test12345@cluster0.pggqupk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
   const client = new MongoClient(url);
   const dbName = "app"; //name of the database
   console.log("DO WE GET HERE?");
