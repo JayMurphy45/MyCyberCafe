@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import NavBar from "@/components/NavBar";
 
+
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 export default function CenteredTabs() {
   const data = {
